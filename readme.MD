@@ -158,7 +158,7 @@ set VT_API_KEY=your_api_key
 Запуск анализа выполняется командой:
 
 ```
-python analyzer.py
+python main.py
 ```
 
 ---
