@@ -86,6 +86,12 @@ def analyze():
 
     suspicious_ips = report_df[report_df["suspicious"] == True]["ip"].tolist()
 
+    # -----------------------------
+    # ЭТАП 3 — РЕАКЦИЯ
+    # -----------------------------
+
+    respond_to_threats(suspicious_ips)
+
 
 
 if __name__ == "__main__":
