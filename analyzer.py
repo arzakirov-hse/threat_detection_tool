@@ -92,6 +92,35 @@ def analyze():
 
     respond_to_threats(suspicious_ips)
 
+    # -----------------------------
+    # ЭТАП 4 — ОТЧЁТ
+    # -----------------------------
+
+    # сохраняем отчёты
+    csv_path = os.path.join(OUTPUT_DIR, "report.csv")
+    json_path = os.path.join(OUTPUT_DIR, "report.json")
+
+    report_df.to_csv(csv_path, index=False)
+    report_df.to_json(json_path, orient="records", indent=2)
+
+    print("Reports saved.")
+
+    # строим график
+    top5 = report_df.head(5)
+
+    plt.figure(figsize=(8, 5))
+
+    sns.barplot(x="ip", y="count", data=top5)
+
+    plt.title("Top 5 source IPs")
+
+    plt.tight_layout()
+
+    chart_path = os.path.join(OUTPUT_DIR, "top_ips.png")
+
+    plt.savefig(chart_path)
+
+    print("Chart saved.")
 
 
 if __name__ == "__main__":
