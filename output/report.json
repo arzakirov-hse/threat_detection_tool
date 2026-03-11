@@ -1,0 +1,20 @@
+[
+  {
+    "ip":"8.42.77.171",
+    "count":7,
+    "malicious_count":0,
+    "suspicious":true
+  },
+  {
+    "ip":"80.211.246.121",
+    "count":2,
+    "malicious_count":0,
+    "suspicious":false
+  },
+  {
+    "ip":"37.49.231.178",
+    "count":2,
+    "malicious_count":0,
+    "suspicious":false
+  }
+]

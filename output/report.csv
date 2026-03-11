@@ -1,0 +1,4 @@
+ip,count,malicious_count,suspicious
+8.42.77.171,7,0,True
+80.211.246.121,2,0,False
+37.49.231.178,2,0,False
