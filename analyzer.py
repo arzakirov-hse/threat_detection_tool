@@ -36,6 +36,56 @@ def analyze():
         return
     print("Events loaded:", len(df))
 
+    # -----------------------------
+    # ЭТАП 2 — АНАЛИЗ
+    # -----------------------------
+
+    # подсчёт количества событий по IP
+    ip_counts = df["src_ip"].value_counts().reset_index()
+    ip_counts.columns = ["ip", "count"]
+
+    # выбираем самые активные IP
+    top_ips = ip_counts.head(TOP_IP_CHECK).copy()
+
+    vt_results = []
+
+    # проверка VirusTotal
+    if not vt_enabled():
+        print("VirusTotal API key not found. Skipping VT checks.")
+
+    else:
+        print("Checking IPs via VirusTotal...")
+
+        for ip in top_ips["ip"]:
+            result = query_ip(ip)
+
+            if result:
+                vt_results.append(result)
+
+    vt_df = pd.DataFrame(vt_results)
+
+    # объединение результатов
+    if not vt_df.empty:
+        report_df = top_ips.merge(vt_df, on="ip", how="left")
+    else:
+        report_df = top_ips
+        report_df["malicious_count"] = None
+
+    # определяем подозрительные IP
+    def suspicious(row):
+
+        if row["count"] >= SUSPICIOUS_EVENT_COUNT:
+            return True
+
+        if row.get("malicious_count") and row["malicious_count"] > 0:
+            return True
+
+        return False
+
+    report_df["suspicious"] = report_df.apply(suspicious, axis=1)
+
+    suspicious_ips = report_df[report_df["suspicious"] == True]["ip"].tolist()
+
 
 
 if __name__ == "__main__":
