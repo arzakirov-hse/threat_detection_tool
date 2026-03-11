@@ -5,18 +5,17 @@
 
 def block_ip(ip):
     """
-    Имитация блокировки IP.
+    Имитация блокировки IP-адреса.
     """
-
-    print(f"[RESPONSE] Blocking IP: {ip}")
+    print(f"[РЕАКЦИЯ] Блокировка IP-адреса: {ip}")
 
 def respond_to_threats(ip_list):
     """
-    Обрабатывает список подозрительных IP.
+    Обрабатывает список обнаруженных подозрительных IP.
     """
     if not ip_list:
-        print("No threats detected.")
+        print("Угроз не обнаружено.")
         return
-    print("Threats detected. Starting response...")
+    print("Обнаружены подозрительные IP-адреса. Запуск реагирования...")
     for ip in ip_list:
         block_ip(ip)
